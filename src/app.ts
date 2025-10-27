@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// Global user handler
+// Global error handler
 app.use((err:any, req: any, res:any, next:any) => {
   console.log(err);
   res

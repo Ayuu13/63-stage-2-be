@@ -29,11 +29,9 @@ export const transferPoints = async (
         if (!receiver) {
             res.status(400).json({ success: true, message: "Penerima tidak ditemukan" });
             return }
-            // throw{status:404, message:"Penerima tidak ditemukan"};
-        // throw new AppError("Penerima tidak ditemukan", 404);
 
         if (sender.points < amount) {
-            res.status(400).json({ success: true, message: "Penerima tidak ditemukan" });
+            res.status(400).json({ success: true, message: "Poin tidak mencukupi" });
             // throw{status:400, message:"Poin tidak mencukupi"};
         // throw new AppError("Poin tidak mencukupi", 400);
         }
