@@ -11,8 +11,15 @@ export async function handleRegister(req: Request, res: Response) {
       return;
     }
 
+    if (!req.file) {
+      res.status(400).json({ message: "mohon upload foto profile" });
+      return;
+    }
+
     const { email, password } = req.body;
-    const user = await registerUser(email, password);
+    const profile = req.file.filename;
+
+    const user = await registerUser(email, password, profile);
     res.status(201).json({ message: "User registered", user });
   } catch (err: any) {
     res.status(400).json({ message: err.message });

@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import { prisma } from "../connection/client";
 import { signToken } from "../utils/jwt";
 
-export async function registerUser(email: string, password: string) {
+export async function registerUser(email: string, password: string, profile: string) {
   if (!email.match(/@/) || password.length < 6) {
     throw new Error("Invalid email or password");
   }
@@ -11,10 +11,10 @@ export async function registerUser(email: string, password: string) {
   const hashed = await bcrypt.hash(password, 10);
 
   const user = await prisma.user.create({
-    data: { email, password: hashed },
+    data: { email, password: hashed, profile },
   });
 
-  return { id: user.id, email: user.email };
+  return { id: user.id, email: user.email, profile };
 }
 
 export async function loginUser(email: string, password: string) {

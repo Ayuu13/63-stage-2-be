@@ -1,15 +1,16 @@
 // src/routes/auth.route.ts
 import express from "express";
 import { handleRegister, handleLogin } from "../controllers/auth";
+import { upload } from "../utils/multer";
+import { limiter } from "../middlewares/rate-limit";
 import { authenticate } from "../middlewares/auth";
-import { prisma } from "../connection/client";
 
 const router = express.Router();
 
-router.post("/register", handleRegister);
+router.post("/register", upload.single("profile"), handleRegister);
 router.post("/login", handleLogin);
 
-router.get("/me", authenticate, (req, res) => {
+router.get("/me", limiter, authenticate, (req, res) => {
   res.json({ message: "Protected route" });
 });
 
